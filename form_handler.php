@@ -16,8 +16,8 @@ $order = array();
 //This will hold our basic food items.
 $menu = array();
 $menu[] = new Item(1, 'Taco', 'A crisp taco filled with Mexican goodness. Muy rico!', 1);
-$menu[] = new Item(2, 'Burrito', 'These burritos are the size of a small donkey!', 5);
-$menu[] = new Item(3, 'Flautas', 'Three long, musical taco rolls fileld with deliciousness.', 3);
+//$menu[] = new Item(2, 'Burrito', 'These burritos are the size of a small donkey!', 5);
+//$menu[] = new Item(3, 'Flautas', 'Three long, musical taco rolls fileld with deliciousness.', 3);
 
 //An array of the fillings for the various Mexican items.
 $fillings = array();
@@ -28,6 +28,11 @@ $fillings[] = 'Chorizo';
 $fillings[] = 'Mole Chicken';
 $fillings[] = 'Veggie';
 
+
+$menu = array();
+for($i = 0; $i < sizeof($fillings); $i++) {
+    $menu[] = new Item($i, 'Taco', 'A crisp taco filled with Mexican goodness. Muy rico!', 1, $fillings[$i]);
+}
 /*
 Create extras array
 This will be used to populate our list of extras 
@@ -48,5 +53,37 @@ $extras[] = 'guacamole';
 $extras[] = 'queso fresco';
 $extras[] = 'cilanto lime sauce';
 
+//Order array
+//Holds items that have been added to the order.
+$order = array();
+
+$action = $_POST['action'];
+
+//Handle actions from webform
+switch ($action) {
+    //Create new Item from form data and add to $order array.
+    case 'Add to Order':
+        $itemID = $_POST['itemID'];             //Dropdown
+        $quant = filter_input(INPUT_POST,'qty');//User input  
+        $order_extras = $_POST['extras'];       //Checkboxes
+        
+        $spec_instr = htmlspecialchars($_POST['instructions']);
+        
+        foreach($menu as $item) {
+            if ($item->ID == $itemID) {
+                
+                $newOrderItem = $item;
+                $newOrderItem->addExtra($order_extras);
+                $newOrderItem->Quantity = $quant;
+                $order[] = $newOrderItem;
+            }
+        }
+        
+    //Total the order and apply tax.
+    case 'Complete Order':
+        
+    //Error handling here.
+    default:
+}
 
 

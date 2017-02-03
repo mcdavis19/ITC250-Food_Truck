@@ -22,27 +22,27 @@
 <div id="wrapper">
 <main>
 <h2>Place an Order</h2>
-<form action="" method="post">
-<fieldset>
     
 <!--
 <pre>
-<?php var_dump($fillings); ?>
+<?php var_dump($menu); ?>
 </pre>
 -->
-    
+
+<form action="." method="post">
+<fieldset>
 <h4>Taco Filling</h4>
-    <select name="filling">
+    <select name="itemID">
     <?php
         // ' . XXX . '
     
         //If we have an array of menu items
-        if (isset($fillings)) {
+        if (isset($menu)) {
             //Populate the dropdown from the array.
-            foreach($fillings as $filling) {
+            foreach($menu as $item) {
                 //HTML checkboxes.
-                echo '<option value="' . $filling . '">';
-                echo $filling;
+                echo '<option value="' . $item->ID . '">';
+                echo $item->Filling;
                 echo '</option>';
             }
         //Error handling will go here.
@@ -53,10 +53,9 @@
     </select>
 
 <h4>Quantity</h4>
-<textarea id="qty" rows="1"></textarea>
+<input type="text" name="qty">
 
 <h4>Extras</h4>
-
 <?php
     // ' . XXX . '
     
@@ -65,33 +64,36 @@
         //Populate the dropdown from the array.
         foreach($extras as $extra) {
             //HTML checkboxes.
-            echo '<p><input type="checkbox" name="extras" value="' . $extra . '">' . $extra . '</p>';
+            echo '<p><input type="checkbox" name="extras[]" value="' . $extra . '">' . $extra . '</p>';
         }
     //Error handling will go here.
     } else {
     }
     
 ?>
-<!--
-<p><input type="checkbox" name="Guacamole" value="Guacamole">Guacamole</p>
-<p><input type="checkbox" name="Sour" value="Sour" >Sour Cream</p>
-<p><input type="checkbox" name="Pico" value="Pico" >Pico de Gallo</p>
-<p><input type="checkbox" name="Jalapenos" value="Jalapenos">Jalapenos</p>
-<p><input type="checkbox" name="Cheese" value="Cheese">Cheese</p>
--->
-
 </fieldset>
-<input type="submit" value="Add to Order">
+
+<!--Special Instructions-->
 <fieldset>
-<legend>Your Order</legend>
-
-
-
 <textarea name="instructions" rows="8"></textarea>
-
-
 </fieldset>
-<input type="submit" value="Complete Order">
+    
+<!--Submit-->
+<fieldset>
+<input type="submit" name="action" value="Add to Order">
+</fieldset>
+</form>
+
+<legend>Your Order</legend>
+<pre>
+<?php echo "Debug: ".$debug.'<br>'; ?>
+<?php var_dump($_POST); ?>
+<?php var_dump($order); ?>
+<?php var_dump($menu); ?>
+</pre>    
+<!--Order will be displayed here-->
+<form action="." method="post">
+    <input type="submit" name="action" value="Complete Order">
 </form>
 </main>
 <aside>
