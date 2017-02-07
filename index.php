@@ -89,9 +89,8 @@ foreach($order as $item) {
 
 
 <pre>
-<!--<?php echo "Debug: ".$debug.'<br>'; ?>-->
-<?php var_dump($_POST); ?>
-
+<?php echo "Debug: ".'<br>'; ?>
+<?php var_dump($_POST); ?> 
 <?php var_dump($order); ?>
 </pre>    
 <!--Order will be displayed here-->

@@ -78,8 +78,7 @@ switch ($action) {
                 $newOrderItem = clone $item;
                 $newOrderItem->addExtra($order_extras);
                 $newOrderItem->Quantity = $quant;
-                array_push($order, $newOrderItem);
-                //$order[] = $newOrderItem;
+                $order[] = $newOrderItem;
             }
             
         }

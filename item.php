@@ -11,8 +11,9 @@ class Item
     //Object - mutable field.
     public $Extras = array();
     
-    define('EXTRAS_FEE', 0.25);
-    
+    const EXTRAS_FEE = 0.25;
+    const TAX = 0.096;
+  
     public function __construct($ID, $Name, $Description = '',$Price = 0, $Filling = '', $Quantity = 0, $Extras = array())
     {
         $this->ID = $ID;
@@ -28,23 +29,17 @@ class Item
     Adds a single item or an array of items to the extras array.
     @param $extra array or single item.
     */
-    public function addExtra($extra)
+    public function addExtra($newExtra)
     {
         //If array
-        if (is_array($extras)) {
-            //If only one item.
-            //Add that one item from array.
-            if (count($extras) == 1) {
-                $this->Extras[] = extras[0];
-            } else {
-                //Otherwise add each item in array
-                foreach($extra as $item) {
+        if (is_array($newExtra)) {
+            //Loop through array and add extras.
+            foreach($newExtra as $extra) {
                 $this->Extras[] = $extra;
-                }
             }
         //If it's not an array, just add the single item.
         } else {
-            $this->Extras[] = $extra;
+            $this->Extras[] = $newExtra;
         }
         
         
@@ -67,6 +62,7 @@ class Item
         
         foreach($this->Extras as $item) {
             $copy::addExtra($item);
+            //array_push($copy->Extras, $item);
         }
         return $copy;
     }
@@ -78,22 +74,22 @@ class Item
         }
         $output .= ": ";
         $output .= "$";
-        $output .= $this::calculateBasePrice() + $this::calculateExtrasCost();
+        //Number format once right before output.
+        $output .= number_format($this::calculateBasePrice() + $this::calculateExtrasCostTotal(), 2);
         return $output;
     }
 // Calculates the base price for the number of the tacos ordered
     
     public function calculateBasePrice()
     {
-        $basePrice = $this->Price * $this->Quantity;
-        return number_format($basePrice, 2);
+        return $basePrice = $this->Price * $this->Quantity;
     }
    
    //Calculates the cost of the added extras
    
     public function calculateExtrasCost()
     {
-        $extrasCost = count($this->Extras) * self->EXTRAS_FEE;
+        $extrasCost = count($this->Extras) * self::EXTRAS_FEE;
         return number_format($extrasCost, 2);
     }
     
@@ -119,7 +115,7 @@ class Item
     public function calculateTax() 
     {
         //$taxTotal = ($this->price + $this->CalculateExtrasCost()) * self::$TAX;
-        $taxTotal = $this->calculateSubtotalBeforeTax() * self::$TAX;
+        $taxTotal = $this->calculateSubtotalBeforeTax() * self::TAX;
         return number_format($taxTotal, 2);
     }
     
@@ -128,8 +124,8 @@ class Item
     public function calculatePerItemSubtotal()
     {
        
-        $subtotal = ($this->Price  + $this->CalculateExtrasCost())  * (self::$TAX + 1);
-        $subtotal = $this->calculateSubtotalBeforeTax()  * (self::$TAX + 1);
+        $subtotal = ($this->Price  + $this->CalculateExtrasCost())  * (self::TAX + 1);
+        $subtotal = $this->calculateSubtotalBeforeTax()  * (self::TAX + 1);
         return number_format($subtotal, 2);
     }
 }#end Item class
