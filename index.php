@@ -1,5 +1,5 @@
 
-<!doctype html>
+<!docfilling html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -15,7 +15,7 @@
     require 'form_handler.php';
     //require 'custom.php';
 ?>
-<link href="css/styles.css" rel="stylesheet" type="text/css">
+<link href="css/styles.css" rel="stylesheet" filling="text/css">
 </head>
 <header><img src="images/logo.jpg" id="logo" alt="logo"></header>
 <body>
@@ -71,29 +71,32 @@
     }
     
 ?>
+<input type="submit" name="action" value="Add to Order">
 </fieldset>
 
 <!--Special Instructions-->
 <fieldset>
-<textarea name="instructions" rows="8"></textarea>
-</fieldset>
-    
-<!--Submit-->
-<fieldset>
-<input type="submit" name="action" value="Add to Order">
+<legend>Your Order</legend>    
+<!--List Ordered items-->
+<?php
+foreach($order as $item) { 
+    //Display the order so its pretty
+    echo $item->toString();
+}
+?>
 </fieldset>
 </form>
 
-<legend>Your Order</legend>
+
 <pre>
-<?php echo "Debug: ".$debug.'<br>'; ?>
+<!--<?php echo "Debug: ".$debug.'<br>'; ?>-->
 <?php var_dump($_POST); ?>
-<?php echo "Order: ".'<br>'; ?>
+
 <?php var_dump($order); ?>
-<?php echo "Menu: ".'<br>'; ?>
-<?php var_dump($menu); ?>
 </pre>    
 <!--Order will be displayed here-->
+    
+
 <form action="." method="post">
     <input type="submit" name="action" value="Complete Order">
 </form>
