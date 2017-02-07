@@ -1,5 +1,5 @@
 
-<!docfilling html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -15,7 +15,7 @@
     require 'form_handler.php';
     //require 'custom.php';
 ?>
-<link href="css/styles.css" rel="stylesheet" filling="text/css">
+<link href="css/styles.css" rel="stylesheet" type="text/css">
 </head>
 <header><img src="images/logo.jpg" id="logo" alt="logo"></header>
 <body>
