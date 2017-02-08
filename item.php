@@ -59,23 +59,28 @@ class Item
         $copy->Filling = $this->Filling;
         $copy->Price = $this->Price;
         $copy->Quantity = $this->Quantity;
+        $copy::addExtra($this->Extras);
         
-        foreach($this->Extras as $item) {
-            $copy::addExtra($item);
-            //array_push($copy->Extras, $item);
-        }
+//        foreach($this->Extras as $item) {
+//            $copy::addExtra($item);//            //array_push($copy->Extras, $item);
+//        }
         return $copy;
     }
     
     public function toString() {
-        $output = "$this->Quantity $this->Filling tacos with";
-        foreach($this->Extras as $extra) {
-            $output .= " " . $extra;
+        //2 Pork tacos with jalapenos extra meat: $3.00
+        $format = '%d %6s tacos with ';
+        $output = sprintf($format, $this->Quantity, $this->Filling);
+        
+        //Fencepost comma problem
+        $output .= " " . $this->Extras[0];
+        for($i = 1; $i < count($this->Extras); $i++) {
+            $output .= ', ';
+            $output .= ' ' . $this->Extras[$i];
         }
-        $output .= ": ";
-        $output .= "$";
         //Number format once right before output.
-        $output .= number_format($this::calculateBasePrice() + $this::calculateExtrasCostTotal(), 2);
+        $price = number_format($this::calculateBasePrice() + $this::calculateExtrasCostTotal(), 2);
+        $output .= sprintf(' $%s', (string)$price);
         return $output;
     }
 // Calculates the base price for the number of the tacos ordered
