@@ -1,4 +1,6 @@
-
+<?php
+    require 'form_handler.php';   
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,11 +12,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js" >
 </script> 
 <![endif]-->
-<?php
-    //require 'item.php';
-    require 'form_handler.php';
-    //require 'custom.php';
-?>
+
 <link href="css/styles.css" rel="stylesheet" type="text/css">
 </head>
 <header><img src="images/logo.jpg" id="logo" alt="logo"></header>
@@ -22,12 +20,6 @@
 <div id="wrapper">
 <main>
 <h2>Place an Order</h2>
-    
-<!--
-<pre>
-<?php var_dump($menu); ?>
-</pre>
--->
 
 <form action="." method="post">
 <fieldset>
@@ -79,25 +71,35 @@
 <legend>Your Order</legend>    
 <!--List Ordered items-->
 <?php
-foreach($order as $item) { 
-    //Display the order so its pretty
-    echo $item->toString();
-}
+    if(session_id() && isset($_SESSION['order'])) {
+        foreach($_SESSION['order'] as $item) { 
+            //Display the order so its pretty
+            echo $item->toString();
+            echo '<br>';
+        }
+    } else {
+        echo '<p>Nothing has been ordered yet.</p>';
+    }
 ?>
 </fieldset>
 </form>
 
 
+<!--
 <pre>
-<?php echo "Debug: ".'<br>'; ?>
+<?php echo '$_POST: '.'<br>'; ?>
 <?php var_dump($_POST); ?> 
+<?php echo 'session: '.'<br>'; ?>
+<?php var_dump($_SESSION); ?>
+<?php echo 'order: '.'<br>'; ?>
 <?php var_dump($order); ?>
 </pre>    
-<!--Order will be displayed here-->
+-->
     
 
 <form action="." method="post">
     <input type="submit" name="action" value="Complete Order">
+    <input type="submit" name="action" value="Start Over">
 </form>
 </main>
 <aside>

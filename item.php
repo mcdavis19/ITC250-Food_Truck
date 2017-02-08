@@ -80,7 +80,7 @@ class Item
         }
         //Number format once right before output.
         $price = number_format($this::calculateBasePrice() + $this::calculateExtrasCostTotal(), 2);
-        $output .= sprintf(' $%s', (string)$price);
+        $output .= sprintf(': $%s', (string)$price);
         return $output;
     }
 // Calculates the base price for the number of the tacos ordered
