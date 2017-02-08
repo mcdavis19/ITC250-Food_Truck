@@ -55,7 +55,10 @@ $extras[] = 'cilanto lime sauce';
 
 //Order array
 //Holds items that have been added to the order.
-$order = array();
+if (!isset($order)) {
+  $order = array();  
+}
+
 
 $action = $_POST['action'];
 
@@ -77,11 +80,12 @@ switch ($action) {
                 $newOrderItem->Quantity = $quant;
                 $order[] = $newOrderItem;
             }
+            
         }
         
     //Total the order and apply tax.
     case 'Complete Order':
-        
+       
     //Error handling here.
     default:
 }

@@ -71,29 +71,31 @@
     }
     
 ?>
+<input type="submit" name="action" value="Add to Order">
 </fieldset>
 
 <!--Special Instructions-->
 <fieldset>
-<textarea name="instructions" rows="8"></textarea>
-</fieldset>
-    
-<!--Submit-->
-<fieldset>
-<input type="submit" name="action" value="Add to Order">
+<legend>Your Order</legend>    
+<!--List Ordered items-->
+<?php
+foreach($order as $item) { 
+    //Display the order so its pretty
+    echo $item->toString();
+}
+?>
 </fieldset>
 </form>
 
-<legend>Your Order</legend>
+
 <pre>
-<?php echo "Debug: ".$debug.'<br>'; ?>
-<?php var_dump($_POST); ?>
-<?php echo "Order: ".'<br>'; ?>
+<?php echo "Debug: ".'<br>'; ?>
+<?php var_dump($_POST); ?> 
 <?php var_dump($order); ?>
-<?php echo "Menu: ".'<br>'; ?>
-<?php var_dump($menu); ?>
 </pre>    
 <!--Order will be displayed here-->
+    
+
 <form action="." method="post">
     <input type="submit" name="action" value="Complete Order">
 </form>

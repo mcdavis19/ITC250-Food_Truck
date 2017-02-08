@@ -11,6 +11,9 @@ class Item
     //Object - mutable field.
     public $Extras = array();
     
+    const EXTRAS_FEE = 0.25;
+    const TAX = 0.096;
+  
     public function __construct($ID, $Name, $Description = '',$Price = 0, $Filling = '', $Quantity = 0, $Extras = array())
     {
         $this->ID = $ID;
@@ -26,15 +29,17 @@ class Item
     Adds a single item or an array of items to the extras array.
     @param $extra array or single item.
     */
-    public function addExtra($extra)
+    public function addExtra($newExtra)
     {
-        
-        if (is_array(extras)) {
-            foreach($extra as $item) {
+        //If array
+        if (is_array($newExtra)) {
+            //Loop through array and add extras.
+            foreach($newExtra as $extra) {
                 $this->Extras[] = $extra;
             }
+        //If it's not an array, just add the single item.
         } else {
-            $this->Extras[] = $extra;
+            $this->Extras[] = $newExtra;
         }
         
         
@@ -57,8 +62,70 @@ class Item
         
         foreach($this->Extras as $item) {
             $copy::addExtra($item);
+            //array_push($copy->Extras, $item);
         }
         return $copy;
     }
-
+    
+    public function toString() {
+        $output = "$this->Quantity $this->Filling tacos with";
+        foreach($this->Extras as $extra) {
+            $output .= " " . $extra;
+        }
+        $output .= ": ";
+        $output .= "$";
+        //Number format once right before output.
+        $output .= number_format($this::calculateBasePrice() + $this::calculateExtrasCostTotal(), 2);
+        return $output;
+    }
+// Calculates the base price for the number of the tacos ordered
+    
+    public function calculateBasePrice()
+    {
+        return $basePrice = $this->Price * $this->Quantity;
+    }
+   
+   //Calculates the cost of the added extras
+   
+    public function calculateExtrasCost()
+    {
+        $extrasCost = count($this->Extras) * self::EXTRAS_FEE;
+        return number_format($extrasCost, 2);
+    }
+    
+    //Calculates the total cost of all the selected extras
+   
+    public function calculateExtrasCostTotal()
+    {
+        $extrasCostTotal = $this->calculateExtrasCost() * $this->Quantity;
+        return number_format($extrasCostTotal, 2);
+    }
+   
+   //Calculates the total of each taco price with extras before tax.
+   
+    
+    public function calculateSubtotalBeforeTax() 
+    {
+        $subtotalBefore = ($this->Price + $this->calculateExtrasCost())* $this->Quantity;
+        return number_format($subtotalBefore, 2);
+    }
+    
+    //Calculates the price of a taco with tax
+    
+    public function calculateTax() 
+    {
+        //$taxTotal = ($this->price + $this->CalculateExtrasCost()) * self::$TAX;
+        $taxTotal = $this->calculateSubtotalBeforeTax() * self::TAX;
+        return number_format($taxTotal, 2);
+    }
+    
+    // Calculates the cost of ordering a taco
+   
+    public function calculatePerItemSubtotal()
+    {
+       
+        $subtotal = ($this->Price  + $this->CalculateExtrasCost())  * (self::TAX + 1);
+        $subtotal = $this->calculateSubtotalBeforeTax()  * (self::TAX + 1);
+        return number_format($subtotal, 2);
+    }
 }#end Item class
