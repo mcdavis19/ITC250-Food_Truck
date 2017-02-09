@@ -55,7 +55,7 @@
 <h4>Quantity</h4>
 <input type="text" name="qty">
 
-<h4>Extras</h4>
+<h4>Extras .25 each</h4>
 <?php
     // ' . XXX . '
     
