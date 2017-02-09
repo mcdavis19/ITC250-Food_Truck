@@ -79,7 +79,7 @@
 <legend>Your Order</legend>    
 <!--List Ordered items-->
 <?php
-    if(session_id() && isset($_SESSION['order'])) {
+    if(isset($_SESSION['order'])) {
         foreach($_SESSION['order'] as $item) { 
             //Display the order so its pretty
             echo $item->toString();

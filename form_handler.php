@@ -90,9 +90,11 @@ switch ($action) {
         break;
     //Restart session
     case 'Start Over':
-        $_SESSION['order'] = array(); 
-        session_abort();
-        session_start();
+        unset($_SESSION['order']);
+        $action = '';
+//        $_SESSION['order'] = array(); 
+//        session_abort();
+//        session_start();
         break;
         
     //Total the order and apply tax.
