@@ -20,6 +20,14 @@
 <div id="wrapper">
 <main>
 <h2>Place an Order</h2>
+    
+
+<?php
+    //Display Error message if it exists
+    if (isset($_POST['error'])) {
+        echo '<p>' . $_POST['error'] . '</p>';
+    }
+?>
 
 <form action="." method="post">
 <fieldset>
@@ -34,7 +42,7 @@
             foreach($menu as $item) {
                 //HTML checkboxes.
                 echo '<option value="' . $item->ID . '">';
-                echo $item->Filling;
+                echo  $item->Filling;
                 echo '</option>';
             }
         //Error handling will go here.
@@ -83,7 +91,6 @@
 ?>
 </fieldset>
 </form>
-
 
 <!--
 <pre>

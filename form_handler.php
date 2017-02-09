@@ -12,20 +12,24 @@ Form handler
 //An array of the fillings for the various Mexican items.
 if(!isset($fillings)) {
     $fillings = array();
-    $fillings[] = 'Chicken';
-    $fillings[] = 'Beef';
-    $fillings[] = 'Pork';
-    $fillings[] = 'Chorizo';
-    $fillings[] = 'Mole Chicken';
-    $fillings[] = 'Veggie';
+    $fillings['Chicken'] = 3;
+    $fillings['Beef'] = 4;
+    $fillings['Pork'] = 4;
+    $fillings['Chorizo'] = 5;
+    $fillings['Mole Chicken'] = 5;
+    $fillings['Veggie'] = 2;
 }
 
 //Create menu array.
 //This will hold our basic food items.
 if(!isset($menu)) {
     $menu = array();
-    for($i = 0; $i < sizeof($fillings); $i++) {
-        $menu[] = new Item($i, 'Taco', 'A crisp taco filled with Mexican goodness. Muy rico!', 1, $fillings[$i]);
+    $i = 0;
+    foreach($fillings as $filling => $price) {
+        //Item constructor for reference.
+        //__construct($ID, $Name, $Description = '',$Price = 0, $Filling = '', $Quantity = 0, $Extras = array())
+        $menu[] = new Item($i, 'Taco', 'A crisp taco filled with Mexican goodness. Muy rico!', $price, $filling);
+        $i++;
     }
 }
 /*
@@ -62,8 +66,15 @@ $action = $_POST['action'];
 switch ($action) {
     //Create new Item from form data and add to $order array.
     case 'Add to Order':
+        $quant = filter_input(INPUT_POST,'qty');//User input 
+        
+        //Validate Quantity
+        if (!is_numeric($quant) || $quant < 1) {
+            $_POST['error'] = 'Please enter a valid quantity.';
+            break;
+        }
+        
         $itemID = $_POST['itemID'];             //Dropdown
-        $quant = filter_input(INPUT_POST,'qty');//User input  
         $order_extras = $_POST['extras'];       //Checkboxes
         
         foreach($menu as $item) {

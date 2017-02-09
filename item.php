@@ -60,11 +60,12 @@ class Item
         $copy->Price = $this->Price;
         $copy->Quantity = $this->Quantity;
         $copy::addExtra($this->Extras);
-        
-//        foreach($this->Extras as $item) {
-//            $copy::addExtra($item);//            //array_push($copy->Extras, $item);
-//        }
         return $copy;
+    }
+    
+    //Returns single item price with currency formatting.
+    public function getSingleItemPrice() {
+        return '$' . number_format($this->Price, 2);
     }
     
     public function toString() {
