@@ -12,12 +12,12 @@ Form handler
 //An array of the fillings for the various Mexican items.
 if(!isset($fillings)) {
     $fillings = array();
-    $fillings['Chicken'] = 3;
-    $fillings['Beef'] = 4;
-    $fillings['Pork'] = 4;
-    $fillings['Chorizo'] = 5;
-    $fillings['Mole Chicken'] = 5;
-    $fillings['Veggie'] = 2;
+    $fillings['Chicken $3.00'] = 3;
+    $fillings['Beef $4.00'] = 4;
+    $fillings['Pork $4.00'] = 4;
+    $fillings['Chorizo $5.00'] = 5;
+    $fillings['Mole Chicken $5.00'] = 5;
+    $fillings['Veggie $2.00'] = 2;
 }
 
 //Create menu array.
