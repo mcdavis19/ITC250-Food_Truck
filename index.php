@@ -55,7 +55,7 @@
 <h4>Quantity</h4>
 <input type="text" name="qty">
 
-<h4>Extras</h4>
+<h4>Extras .25 each</h4>
 <?php
     // ' . XXX . '
     
@@ -110,33 +110,8 @@
 </form>
 </main>
 <aside>
-<h2>Taco Menu</h2>
-<table>
-<tr>
-<td><h3>Chicken $3</h3>
-<p>Shredded spiced chicken topped with tomatoes and fresh cilantro</p></td>
-<td><h3>Beef $4</h3>
-<p>Seasoned ground beef, onion, garlic, tomato and shredded Romaine lettuce</p>
-</td>
-</tr>
-<tr>
-<td><h3>Pork $4</h3>
-<p>Shredded pork, onion, raddish, and fresh cilantro</p></td>
-<td><h3>Chorizo  $5</h3>
-<p>Chorizo sausage, russet potatoes, onion and fresh cilantro</p>
-</td>
-</tr>
-<tr>
-<td><h3>Mole Chicken $5</h3>
-<p>Shredded chicken simmered in mole sauce, chiles, and radish</p></td>
-<td><h3>Veggie  $2</h3>
-<p>Roasted Zucchini, sweet corn, black beans and fresh cilantro</p>
-</td>
-</tr>
-</table>
 <img src="images/veggie.jpg" id="veggie" alt="veggie">
 <img src="images/beef.jpg" id="beef" alt="beef">
-
 
 </aside>
 </div>

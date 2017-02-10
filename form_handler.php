@@ -12,16 +12,16 @@ Form handler
 //An array of the fillings for the various Mexican items.
 if(!isset($fillings)) {
     $fillings = array();
-    $fillings['Chicken'] = 3;
-    $fillings['Beef'] = 4;
-    $fillings['Pork'] = 4;
-    $fillings['Chorizo'] = 5;
-    $fillings['Mole Chicken'] = 5;
-    $fillings['Veggie'] = 2;
+    $fillings['Chicken $3.00'] = 3;
+    $fillings['Beef $4.00'] = 4;
+    $fillings['Pork $4.00'] = 4;
+    $fillings['Chorizo $5.00'] = 5;
+    $fillings['Mole Chicken $5.00'] = 5;
+    $fillings['Veggie $2.00'] = 2;
 }
 
 //Create menu array.
-//This will hold our basic item items.
+//This will hold our basic food items.
 if(!isset($menu)) {
     $menu = array();
     $i = 0;
@@ -46,12 +46,12 @@ other extras!
 */
 if (!isset($extras)) {
     $extras = array();
-    $extras[] = 'Sour Cream';
-    $extras[] = 'Jalapenos';
-    $extras[] = 'Extra Meat';
-    $extras[] = 'Guacamole';
-    $extras[] = 'Queso Fresco';
-    $extras[] = 'Cilanto Lime Sauce';
+    $extras[] = 'sour cream';
+    $extras[] = 'jalapenos';
+    $extras[] = 'extra meat';
+    $extras[] = 'guacamole';
+    $extras[] = 'queso fresco';
+    $extras[] = 'cilanto lime sauce';
 }
 
 //Order array
@@ -99,37 +99,6 @@ switch ($action) {
         
     //Total the order and apply tax.
     case 'Complete Order':
-         //create the order summary showing all the items and Extra ordered,
-        //the subtotal for each item, and a cumulative total cost due.
-    $total = 0;
-    foreach ($_SESSION['order'] as $item) {
-        echo '  <h4>' . $item->toString() . '</h4>
-                <p>Base Price: ($' . $item->Price . ' /per item)</p>
-                <p class="cost">$' . $item->calculateBasePrice() . ' </p> 
-                <p>Extras Price: ($0.25 /per extra) </p>';
-        
-        //display extra price as 0.00 if there is no extra added
-        if (!empty($item->extras)){
-                echo '<p class="cost">$0.00 </p>';
-        }else{
-                echo'<p class="cost">$' . $item->calculateExtrasCostTotal() . ' </p>';}//end of if statment
-        
-        echo '  <p>Subtotal Before Tax: </p>
-                <p class="cost">$' . $item->calculateSubtotalBeforeTax() . ' </p>-->
-                <p>Tax (9.6%)</p>
-            <p class="cost">$' . $item->calculateTax() . ' </p>
-            <hr>
-            <p>Subtotal:</p>
-            <p class="cost">$' . $item->calculatePerItemSubtotal() . ' </p>
-            <br>
-            <br>';
-    
-        //calculate total
-        $total += $item->calculatePerItemSubtotal();
-    }//end of foreach loop
-    //display total
-    echo '<h5 class="total">Total price:</h5>
-        <p class="total">$' . number_format($total, 2) . ' </p>';
        break;
     //Error handling here.
     default:
