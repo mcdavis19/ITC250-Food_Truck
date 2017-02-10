@@ -1,5 +1,7 @@
-
-<!docfilling html>
+<?php
+    require 'form_handler.php';   
+?>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -10,12 +12,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js" >
 </script> 
 <![endif]-->
-<?php
-    //require 'item.php';
-    require 'form_handler.php';
-    //require 'custom.php';
-?>
-<link href="css/styles.css" rel="stylesheet" filling="text/css">
+
+<link href="css/styles.css" rel="stylesheet" type="text/css">
 </head>
 <header><img src="images/logo.jpg" id="logo" alt="logo"></header>
 <body>
@@ -23,11 +21,13 @@
 <main>
 <h2>Place an Order</h2>
     
-<!--
-<pre>
-<?php var_dump($menu); ?>
-</pre>
--->
+
+<?php
+    //Display Error message if it exists
+    if (isset($_POST['error'])) {
+        echo '<p>' . $_POST['error'] . '</p>';
+    }
+?>
 
 <form action="." method="post">
 <fieldset>
@@ -42,7 +42,7 @@
             foreach($menu as $item) {
                 //HTML checkboxes.
                 echo '<option value="' . $item->ID . '">';
-                echo $item->Filling;
+                echo  $item->Filling;
                 echo '</option>';
             }
         //Error handling will go here.
@@ -79,31 +79,64 @@
 <legend>Your Order</legend>    
 <!--List Ordered items-->
 <?php
-foreach($order as $item) { 
-    //Display the order so its pretty
-    echo $item->toString();
-}
+    if(isset($_SESSION['order']) {
+        foreach($_SESSION['order'] as $item) { 
+            //Display the order so its pretty
+            echo $item->toString();
+            echo '<br>';
+        }
+    } else {
+        echo '<p>Nothing has been ordered yet.</p>';
+    }
 ?>
 </fieldset>
 </form>
 
-
+<!--
 <pre>
-<!--<?php echo "Debug: ".$debug.'<br>'; ?>-->
-<?php var_dump($_POST); ?>
-
+<?php echo '$_POST: '.'<br>'; ?>
+<?php var_dump($_POST); ?> 
+<?php echo 'session: '.'<br>'; ?>
+<?php var_dump($_SESSION); ?>
+<?php echo 'order: '.'<br>'; ?>
 <?php var_dump($order); ?>
 </pre>    
-<!--Order will be displayed here-->
+-->
     
 
 <form action="." method="post">
     <input type="submit" name="action" value="Complete Order">
+    <input type="submit" name="action" value="Start Over">
 </form>
 </main>
 <aside>
+<h2>Taco Menu</h2>
+<table>
+<tr>
+<td><h3>Chicken $3</h3>
+<p>Shredded spiced chicken topped with tomatoes and fresh cilantro</p></td>
+<td><h3>Beef $4</h3>
+<p>Seasoned ground beef, onion, garlic, tomato and shredded Romaine lettuce</p>
+</td>
+</tr>
+<tr>
+<td><h3>Pork $4</h3>
+<p>Shredded pork, onion, raddish, and fresh cilantro</p></td>
+<td><h3>Chorizo  $5</h3>
+<p>Chorizo sausage, russet potatoes, onion and fresh cilantro</p>
+</td>
+</tr>
+<tr>
+<td><h3>Mole Chicken $5</h3>
+<p>Shredded chicken simmered in mole sauce, chiles, and radish</p></td>
+<td><h3>Veggie  $2</h3>
+<p>Roasted Zucchini, sweet corn, black beans and fresh cilantro</p>
+</td>
+</tr>
+</table>
 <img src="images/veggie.jpg" id="veggie" alt="veggie">
 <img src="images/beef.jpg" id="beef" alt="beef">
+
 
 </aside>
 </div>

@@ -28,13 +28,13 @@ header{
 }
 
 main{
-	width:570px;
+	width:350px;
 	float:left;
 	
 }
 
 aside{
-	width:350px;
+	width:570px;
 	float:right;
 	
 }
@@ -71,14 +71,31 @@ textarea{
 	width:100%;
 }
 
-#veggie, #beef{
-	padding:20px;
+#beef{
+	padding-left:30px;
 }
 
 #veggie{
 	margin-top:5px;
+	padding-left:40px;
+	
 }
 
-#qty{
-	width: 20%;
-}
+	table{
+		width:97.8723%;
+		margin:0 auto;
+		border:1px solid black;
+		border-spacing:10px;
+	}
+	
+	td{
+		width:50%;
+		vertical-align:top;
+		margin:5px;
+		
+	}
+	
+	th{
+		padding:5px;
+		
+	}

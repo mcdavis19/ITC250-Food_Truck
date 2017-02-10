@@ -1,37 +1,36 @@
 <?php
 
 include 'item.php';
-
+session_set_cookie_params(3600,"/");
+session_start();
 /*
 Form handler
 */
 
-/*
-An array that will hold the items in the current order.
-This will be used to list the ordered items at the bottom of the page beneath the form. Items will be added to the array on a button click.
-*/
-$order = array();
+
+
+//An array of the fillings for the various Mexican items.
+if(!isset($fillings)) {
+    $fillings = array();
+    $fillings['Chicken $3.00'] = 3;
+    $fillings['Beef $4.00'] = 4;
+    $fillings['Pork $4.00'] = 4;
+    $fillings['Chorizo $5.00'] = 5;
+    $fillings['Mole Chicken $5.00'] = 5;
+    $fillings['Veggie $2.00'] = 2;
+}
 
 //Create menu array.
 //This will hold our basic food items.
-$menu = array();
-$menu[] = new Item(1, 'Taco', 'A crisp taco filled with Mexican goodness. Muy rico!', 1);
-//$menu[] = new Item(2, 'Burrito', 'These burritos are the size of a small donkey!', 5);
-//$menu[] = new Item(3, 'Flautas', 'Three long, musical taco rolls fileld with deliciousness.', 3);
-
-//An array of the fillings for the various Mexican items.
-$fillings = array();
-$fillings[] = 'Chicken';
-$fillings[] = 'Beef';
-$fillings[] = 'Pork';
-$fillings[] = 'Chorizo';
-$fillings[] = 'Mole Chicken';
-$fillings[] = 'Veggie';
-
-
-$menu = array();
-for($i = 0; $i < sizeof($fillings); $i++) {
-    $menu[] = new Item($i, 'Taco', 'A crisp taco filled with Mexican goodness. Muy rico!', 1, $fillings[$i]);
+if(!isset($menu)) {
+    $menu = array();
+    $i = 0;
+    foreach($fillings as $filling => $price) {
+        //Item constructor for reference.
+        //__construct($ID, $Name, $Description = '',$Price = 0, $Filling = '', $Quantity = 0, $Extras = array())
+        $menu[] = new Item($i, 'Taco', 'A crisp taco filled with Mexican goodness. Muy rico!', $price, $filling);
+        $i++;
+    }
 }
 /*
 Create extras array
@@ -45,20 +44,21 @@ Lowercase is used for simplicity. This can be changed in the HTML form if we nee
 Feel free to add to this if you come up with any ideas for 
 other extras!
 */
-$extras = array();
-$extras[] = 'sour cream';
-$extras[] = 'jalapenos';
-$extras[] = 'extra meat';
-$extras[] = 'guacamole';
-$extras[] = 'queso fresco';
-$extras[] = 'cilanto lime sauce';
+if (!isset($extras)) {
+    $extras = array();
+    $extras[] = 'sour cream';
+    $extras[] = 'jalapenos';
+    $extras[] = 'extra meat';
+    $extras[] = 'guacamole';
+    $extras[] = 'queso fresco';
+    $extras[] = 'cilanto lime sauce';
+}
 
 //Order array
 //Holds items that have been added to the order.
-if (!isset($order)) {
-  $order = array();  
+if (!isset($_SESSION['order'])) {
+  $_SESSION['order'] = array();  
 }
-
 
 $action = $_POST['action'];
 
@@ -66,29 +66,43 @@ $action = $_POST['action'];
 switch ($action) {
     //Create new Item from form data and add to $order array.
     case 'Add to Order':
-        $itemID = $_POST['itemID'];             //Dropdown
-        $quant = filter_input(INPUT_POST,'qty');//User input  
-        $order_extras = $_POST['extras'];       //Checkboxes
+        $quant = filter_input(INPUT_POST,'qty');//User input 
         
-        $spec_instr = htmlspecialchars($_POST['instructions']);
+        //Validate Quantity
+        if (!is_numeric($quant) || $quant < 1) {
+            $_POST['error'] = 'Please enter a valid quantity.';
+            break;
+        }
+        
+        $itemID = $_POST['itemID'];             //Dropdown
+        $order_extras = $_POST['extras'];       //Checkboxes
         
         foreach($menu as $item) {
             if ($item->ID == $itemID) {
-                
-                $newOrderItem = $item;
+                $newOrderItem = clone $item;
                 $newOrderItem->addExtra($order_extras);
                 $newOrderItem->Quantity = $quant;
-                array_push($order, $newOrderItem);
-                //$order[] = $newOrderItem;
+                array_push($_SESSION['order'], $newOrderItem);
+                //Post gets item from Session, but it doesn't persist.
+                $_POST['newitem'] = $_SESSION['order'];
             }
-            
         }
+        break;
+    //Restart session
+    case 'Start Over':
+        unset($_SESSION['order']);
+        $action = '';
+//        $_SESSION['order'] = array(); 
+//        session_abort();
+//        session_start();
+        break;
         
     //Total the order and apply tax.
     case 'Complete Order':
-       
+       break;
     //Error handling here.
     default:
+        break;
 }
 
 
