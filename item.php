@@ -70,7 +70,7 @@ class Item
     
     public function toString() {
         //2 Pork tacos with jalapenos extra meat: $3.00
-        $format = '%d %6s tacos with ';
+        $format = '%d %6s Tacos with ';
         $output = sprintf($format, $this->Quantity, $this->Filling);
         
         //Fencepost comma problem
